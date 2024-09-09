@@ -1,0 +1,28 @@
+name: Get-Caller-Identity
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  id-token: write # Required to request the OIDC token
+  contents: read
+
+jobs:
+  get_caller_identity:
+    name: Get Caller Identity
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Configure AWS Credentials"
+      uses: aws-actions/configure-aws-credentials@v4.0.2
+      with:
+        role-to-assume: ${{ secrets.AWS_ACCOUNT_ROLE }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Fetch the caller identity
+      run: |
+        aws sts get-caller-identity
