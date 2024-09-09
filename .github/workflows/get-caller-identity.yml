@@ -26,3 +26,7 @@ jobs:
     - name: Fetch the caller identity
       run: |
         aws sts get-caller-identity
+
+    - name: Fetch the caller identity
+      run: |
+        aws s3 ls
